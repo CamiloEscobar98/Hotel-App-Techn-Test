@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Resources\Localization\State;
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+use App\Http\Resources\Localization\State\StateResource;
+
+class StateCollection extends ResourceCollection
+{
+
+    /**
+     * The resource that this resource collects.
+     *
+     * @var string
+     */
+    public $collects = StateResource::class;
+
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'data' => $this->collection,
+        ];
+    }
+}

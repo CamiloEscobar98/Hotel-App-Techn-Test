@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+use App\Models\Localization\Country;
+
+class LocalizationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,8 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            LocalizationSeeder::class
-        ]);
+        Country::factory()->count(20)->create();
     }
 }
