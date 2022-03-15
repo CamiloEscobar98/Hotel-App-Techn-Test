@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Database\QueryException;
+use Illuminate\Validation\Rule;
 
 use App\Http\Resources\Localization\City\CityCollection;
-use App\Http\Resources\Localization\City\CityResource;
+use App\Http\Resources\Localization\City\CityShowResource;
 
 use App\Models\Localization\City;
-use Illuminate\Validation\Rule;
 
 class CityController extends Controller
 {
@@ -33,7 +33,7 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        return new CityResource(City::findOrFail($id));
+        return new CityShowResource(City::findOrFail($id));
     }
 
     /**
