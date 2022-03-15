@@ -14,6 +14,7 @@ use App\Models\Configuration\AssignmentRoomType;
 
 class AssignmentRoomTypeController extends Controller
 {
+
     /**
      * Get the Attributes for the validation.
      * 
@@ -69,7 +70,7 @@ class AssignmentRoomTypeController extends Controller
         } catch (QueryException $ex) {
             return response()->json(['message' => 'Error! The Assignment Room Type has not been created.', 'error_code' => $ex->getCode()], 500);
         }
-        return response()->json(['message' => 'The Assignment Room Type has been created.']);
+        return response()->json(['message' => 'The Assignment Room Type has been created. :' . $assignmentRoomType->roomType->name . ': with :' . $assignmentRoomType->accommodationType->name . ':']);
     }
 
 
