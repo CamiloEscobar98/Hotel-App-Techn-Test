@@ -48,7 +48,7 @@ class AssignmentRoomType extends Model
      * 
      * @return Room[] $rooms
      */
-    public function rooms()
+    public function room()
     {
         return $this->hasMany(Room::class);
     }

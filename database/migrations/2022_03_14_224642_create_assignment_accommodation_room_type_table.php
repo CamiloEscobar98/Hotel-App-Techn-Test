@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->timestamps();
 
+            $table->unique(['room_type_id', 'accommodation_type_id'], 'unique_assignment_room_type');
             $table->foreign('room_type_id', 'fk_assignment_room_type')->references('id')->on('room_types')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('accommodation_type_id', 'fk_assignment_accommodation_type')->references('id')->on('accommodation_types')

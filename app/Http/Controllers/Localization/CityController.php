@@ -82,8 +82,12 @@ class CityController extends Controller
     {
         $rules = [
             'state_id' => ['exists:states'],
-            'name' => ['max:80', 'min:4'],
-            'slug' => ['max:4', 'min:2']
+            'name' => [Rule::unique('cities', 'name')->where(function ($query) use ($request, $id) {
+                return !$query->where('name', $request->name)->where('state_id', $request->state_id)->where('id', $id);
+            }), 'max:80', 'min:4'],
+            'slug' => [Rule::unique('cities', 'slug')->where(function ($query) use ($request, $id) {
+                return !$query->where('slug', $request->slug)->where('state_id', $request->state_id)->where('id', $id);
+            }), 'max:4', 'min:2']
         ];
 
         $attributes = [

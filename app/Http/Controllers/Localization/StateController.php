@@ -45,10 +45,10 @@ class StateController extends Controller
         $rules = [
             'country_id' => ['required', 'exists:countries,id'],
             'name' => ['required', Rule::unique('states', 'name')->where(function ($query) use ($request) {
-                return !$query->where('name', $request->name)->where('country_id', $request->state_id);
+                return !$query->where('name', $request->name)->where('country_id', $request->country_id);
             }), 'max:80', 'min:4'],
             'slug' => ['required', Rule::unique('states', 'slug')->where(function ($query) use ($request) {
-                return !$query->where('slug', $request->slug)->where('country_id', $request->state_id);
+                return !$query->where('slug', $request->slug)->where('country_id', $request->country_id);
             }), 'max:4', 'min:2']
         ];
 
@@ -80,8 +80,12 @@ class StateController extends Controller
     {
         $rules = [
             'country_id' => ['exists:countries,id'],
-            'name' => ['max:80', 'min:4'],
-            'slug' => ['max:4', 'min:2']
+            'name' => [Rule::unique('states', 'name')->where(function ($query) use ($request) {
+                return !$query->where('name', $request->name)->where('country_id', $request->country_id);
+            })->ignore($id), 'max:80', 'min:4'],
+            'slug' => [Rule::unique('states', 'slug')->where(function ($query) use ($request) {
+                return !$query->where('slug', $request->slug)->where('country_id', $request->country_id);
+            })->ignore($id), 'max:4', 'min:2']
         ];
 
         $attributes = [

@@ -66,5 +66,14 @@ $router->group(['prefix' => 'configuration'], function () use ($router) {
                 $router->delete('/', ['as' => 'accommodation_types.delete', 'uses' => 'AccommodationTypeController@destroy']);
             });
         });
+        $router->group(['prefix' => 'assignment_room_types'], function () use ($router) {
+            $router->get('/', ['as' => 'assignment_room_types.index', 'uses' => 'AssignmentRoomTypeController@index']);
+            $router->post('/', ['as' => 'assignment_room_types.store', 'uses' => 'AssignmentRoomTypeController@store']);
+            $router->group(['prefix' => '/{id}'], function () use ($router) {
+                $router->get('/', ['as' => 'assignment_room_types.show', 'uses' => 'AssignmentRoomTypeController@show']);
+                $router->put('/', ['as' => 'assignment_room_types.update', 'uses' => 'AssignmentRoomTypeController@update']);
+                $router->delete('/', ['as' => 'assignment_room_types.delete', 'uses' => 'AssignmentRoomTypeController@destroy']);
+            });
+        });
     });
 });
