@@ -17,6 +17,11 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+$router->group(['namespace' => 'Auth'], function () use ($router) {
+    $router->post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
+});
+
 $router->group(['prefix' => 'configuration'], function () use ($router) {
     $router->group(['prefix' => 'localization', 'namespace' => 'Localization'], function () use ($router) {
         $router->group(['prefix' => 'countries'], function () use ($router) {
