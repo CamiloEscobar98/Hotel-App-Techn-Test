@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Database\QueryException;
 
 use App\Models\User;
 
@@ -15,6 +16,44 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Get the attributes which are used in validation.
+     * 
+     * @return array
+     */
+    protected $attributes = [];
+
+    /**
+     * Loggin an User.
+     * 
+     * @return Response
+     */
+    public function register(Request $request)
+    {
+        $rules = [
+            'name' => ['required', 'string', 'min:1', 'max:160'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'string', 'min:4']
+        ];
+
+        $this->validate($request, $rules, [], $this->attributes);
+
+        $apiToken = Str::random(64);
+
+        $data = $request->only(['name', 'email', 'password']);
+
+        $data['password'] = Hash::make($data['password']);
+        $data['api_token'] = $apiToken;
+
+        try {
+            $user = User::create($data);
+            $user->api_token = $apiToken;
+            $user->save();
+        } catch (QueryException $ex) {
+            return response()->json(['message' => 'Error! The User has not been created.', 'error_code' => $ex->getCode()]);
+        }
+        return response()->json(['message' => 'The User: ' . $user->name . ' has been created.', 'token' => base64_encode($apiToken)]);
+    }
 
     /**
      * Loggin an User.

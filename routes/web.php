@@ -23,6 +23,7 @@ $router->get('/', function () use ($router) {
 |------------------------------------------------------------------------------
 */
 $router->group(['namespace' => 'Auth'], function () use ($router) {
+    $router->post('register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
     $router->post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
     $router->group(['middleware' => 'auth', 'prefix' => 'auth'], function () use ($router) {
         $router->get('profile', ['as' => 'auth.profile', 'uses' => 'AuthController@profile']);
