@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
+use App\Models\Room;
+use App\Models\Localization\City;
+
 class Hotel extends Model
 {
     use HasFactory;
@@ -55,6 +58,28 @@ class Hotel extends Model
     }
 
     /**
+     * Set the Hotel's address.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setAddressAttribute($value)
+    {
+        return $this->attributes['address'] = Str::lower($value);
+    }
+
+    /**
+     * Get the Hotel's address.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getAddressAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    /**
      * Set the Hotel's properties.
      *
      * @param  string  $value
@@ -74,5 +99,25 @@ class Hotel extends Model
     public function getPropertiesAttribute($value)
     {
         return json_decode($value);
+    }
+
+    /**
+     * Get the listing of Room which is relationed with Hotel.
+     * 
+     * @return Room[] $rooms
+     */
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    /**
+     * Get the City which is relationd with Hotel.
+     * 
+     * @return City $city
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

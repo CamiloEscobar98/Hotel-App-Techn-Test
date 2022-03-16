@@ -77,3 +77,13 @@ $router->group(['prefix' => 'configuration'], function () use ($router) {
         });
     });
 });
+
+$router->group(['prefix' => 'hotels'], function () use ($router) {
+    $router->get('/', ['as' => 'hotels.index', 'uses' => 'HotelController@index']);
+    $router->post('/', ['as' => 'hotels.store', 'uses' => 'HotelController@store']);
+    $router->group(['prefix' => '/{id}'], function () use ($router) {
+        $router->get('/', ['as' => 'hotels.show', 'uses' => 'HotelController@show']);
+        $router->put('/', ['as' => 'hotels.update', 'uses' => 'HotelController@update']);
+        $router->delete('/', ['as' => 'hotels.delete', 'uses' => 'HotelController@destroy']);
+    });
+});

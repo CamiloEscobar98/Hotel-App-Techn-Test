@@ -54,7 +54,7 @@ class Room extends Model
      */
     public function roomType()
     {
-        return $this->hasOneThrough(RoomType::class, AssignmentRoomType::class);
+        return $this->hasOneThrough(RoomType::class, AssignmentRoomType::class, 'id', 'id', 'assignment_room_id', 'room_type_id');
     }
 
     /**
@@ -64,6 +64,6 @@ class Room extends Model
      */
     public function accommodationType()
     {
-        return $this->hasOneThrough(AccommodationType::class, AssignmentRoomType::class);
+        return $this->hasOneThrough(AccommodationType::class, AssignmentRoomType::class, 'id', 'id', 'assignment_room_id', 'accommodation_type_id');
     }
 }
