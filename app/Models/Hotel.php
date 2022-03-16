@@ -120,4 +120,25 @@ class Hotel extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    /**
+     * Get the number of rooms which the Hotel has.
+     * 
+     * @return int $numberOfRooms
+     */
+    public function numberOfRooms()
+    {
+        return $this->rooms->sum('ammount_rooms');
+    }
+
+    /**
+     * Get the number of rooms which the model has and the assignment_type_id is $id.
+     * 
+     * @param $assignmentTypeId;
+     * @return int $numberOfRooms
+     */
+    public function numberOfRoomsWhenNotAssignmentType($assignmentTypeId)
+    {
+        return $this->rooms->whereNot('assignment_room_id', $assignmentTypeId)->sum('ammount_rooms');
+    }
 }

@@ -25,7 +25,7 @@ class HotelResource extends JsonResource
                 'slug' => $this->city->slug,
                 'url' => route('cities.show', ['id' => $this->city_id])
             ],
-            'number_of_rooms' => (int) $this->rooms()->sum('ammount_rooms')
+            'number_of_rooms' => (int) $this->numberOfRooms()
         ];
     }
 }
