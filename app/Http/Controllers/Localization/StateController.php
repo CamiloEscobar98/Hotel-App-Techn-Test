@@ -14,6 +14,17 @@ use App\Models\Localization\State;
 class StateController extends Controller
 {
     /**
+     * Get the attributes which are used in Validation.
+     * 
+     * @return array
+     */
+    protected $attributes = [
+        'country_id' => 'Country',
+        'name' => "State's name",
+        'slug' => "State's short name",
+    ];
+
+    /**
      * Display a listing of the State.
      *
      * @return \Illuminate\Http\Response
@@ -52,13 +63,7 @@ class StateController extends Controller
             }), 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'country_id' => 'Country',
-            'name' => "State's name",
-            'slug' => "State's short name",
-        ];
-
-        $this->validate($request, $rules, [], $attributes);
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug', 'country_id']);
 
@@ -88,13 +93,7 @@ class StateController extends Controller
             })->ignore($id), 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'country_id' => 'Country',
-            'name' => "State's name",
-            'slug' => "State's short name",
-        ];
-
-        $this->validate($request, $rules, [], $attributes);
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug', 'country_id']);
 

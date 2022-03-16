@@ -14,6 +14,16 @@ use App\Models\Localization\Country;
 class CountryController extends Controller
 {
     /**
+     * Get the attributes which are used in Validation.
+     * 
+     * @return array
+     */
+    protected $attributes = [
+        'name' => "Country's name",
+        'slug' => "Country's short name",
+    ];
+
+    /**
      * Display a listing of the Country.
      *
      * @return \Illuminate\Http\Response
@@ -47,12 +57,7 @@ class CountryController extends Controller
             'slug' => ['required', 'unique:countries', 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'name' => "Country's name",
-            'slug' => "Country's short name",
-        ];
-
-        $this->validate($request, $rules, [], $attributes);
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug']);
 
@@ -77,12 +82,7 @@ class CountryController extends Controller
             'slug' => ['unique:countries,slug,' . $id, 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'name' => "Country's name",
-            'slug' => "Country's short name",
-        ];
-
-        $this->validate($request, $rules, [], $attributes);
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug']);
 

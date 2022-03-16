@@ -15,6 +15,18 @@ use App\Models\Localization\City;
 
 class CityController extends Controller
 {
+
+    /**
+     * Get the attributes which are used in Validation.
+     * 
+     * @return array
+     */
+    protected  $attributes = [
+        'state_id' => 'State',
+        'name' => "City's name",
+        'slug' => "City's short name",
+    ];
+
     /**
      * Display a listing of the City.
      *
@@ -54,13 +66,9 @@ class CityController extends Controller
             }), 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'state_id' => 'State',
-            'name' => "City's name",
-            'slug' => "City's short name",
-        ];
 
-        $this->validate($request, $rules, [], $attributes);
+
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug', 'state_id']);
 
@@ -90,13 +98,9 @@ class CityController extends Controller
             }), 'max:4', 'min:2']
         ];
 
-        $attributes = [
-            'state_id' => 'State',
-            'name' => "City's name",
-            'slug' => "City's short name",
-        ];
 
-        $this->validate($request, $rules, [], $attributes);
+
+        $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['name', 'slug', 'state_id']);
 
