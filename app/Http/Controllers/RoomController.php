@@ -15,6 +15,11 @@ use App\Models\Hotel;
 
 class RoomController extends Controller
 {
+    /**
+     * Get the attributes which are used in the validation.
+     * 
+     * @return array
+     */
     protected $attributes = ['hotel_id' => 'hotel'];
 
     /**

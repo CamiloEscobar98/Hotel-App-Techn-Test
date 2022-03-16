@@ -15,7 +15,12 @@ use Illuminate\Validation\Rule;
 class HotelController extends Controller
 {
 
-    protected $attributes = [];
+    /**
+     * Get the attributes which are used in the validation.
+     * 
+     * @return array
+     */
+    protected $attributes = ['city_id' => 'city', 'nit' => 'hotel nit'];
 
     /**
      * Display a listing of the Hotel.
