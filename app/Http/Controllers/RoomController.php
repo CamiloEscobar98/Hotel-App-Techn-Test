@@ -24,7 +24,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return new RoomCollection(Room::paginate(5));
+        return new RoomCollection(Room::orderBy('hotel_id', 'ASC')->paginate(5));
     }
 
     /**
@@ -35,13 +35,17 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, ['hotel_id' => ['required', 'exists:hotels,id']], [], $this->attributes);
+
         $hotel = Hotel::findOrFail($request->hotel_id);
+
+
         $rules = [
-            'hotel_id' => ['exists:hotels,id', Rule::unique('rooms', 'hotel_id')->where(function ($query) use ($request) {
+            'hotel_id' => ['required', 'exists:hotels,id', Rule::unique('rooms', 'hotel_id')->where(function ($query) use ($request) {
                 return !$query->where('assignment_room_id', $request->assignment_room_id);
-            }), 'max:80', 'string'],
-            'assignment_room_id' => ['exists:assignment_accommodation_room_type,id'],
-            'ammount_rooms' => [Rule::max($hotel->properties->rooms_number_total - $hotel->numberOfRooms())],
+            })],
+            'assignment_room_id' => ['required', 'exists:assignment_accommodation_room_type,id'],
+            'ammount_rooms' => ['required', 'integer', 'min:1', 'max:' . $hotel->properties->rooms_number_total - $hotel->numberOfRooms()],
         ];
 
         $request->properties = json_encode($request->properties);
@@ -77,6 +81,8 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, ['hotel_id' => ['required', 'exists:hotels,id']], [], $this->attributes);
+
         $hotel = Hotel::findOrFail($request->hotel_id);
 
         $rules = [
@@ -84,7 +90,7 @@ class RoomController extends Controller
                 return !$query->where('assignment_room_id', $request->assignment_room_id);
             })->ignore($id), 'max:80', 'string'],
             'assignment_room_id' => ['exists:assignment_accommodation_room_type,id'],
-            'ammount_rooms' => [Rule::max($hotel->properties->rooms_number_total -  $hotel->numberOfRoomsWhenNotAssignmentType($id))],
+            'ammount_rooms' => ['required', 'integer', 'min:1', 'max:' . $hotel->properties->rooms_number_total - $hotel->numberOfRooms()],
         ];
 
         $this->validate($request, $rules, [], $this->attributes);

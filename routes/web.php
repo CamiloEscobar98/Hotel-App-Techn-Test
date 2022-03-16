@@ -87,3 +87,13 @@ $router->group(['prefix' => 'hotels'], function () use ($router) {
         $router->delete('/', ['as' => 'hotels.delete', 'uses' => 'HotelController@destroy']);
     });
 });
+
+$router->group(['prefix' => 'rooms'], function () use ($router) {
+    $router->get('/', ['as' => 'rooms.index', 'uses' => 'RoomController@index']);
+    $router->post('/', ['as' => 'rooms.store', 'uses' => 'RoomController@store']);
+    $router->group(['prefix' => '/{id}'], function () use ($router) {
+        $router->get('/', ['as' => 'rooms.show', 'uses' => 'RoomController@show']);
+        $router->put('/', ['as' => 'rooms.update', 'uses' => 'RoomController@update']);
+        $router->delete('/', ['as' => 'rooms.delete', 'uses' => 'RoomController@destroy']);
+    });
+});

@@ -16,17 +16,17 @@ class RoomResource extends JsonResource
     {
         return [
             'hotel' => [
-                'nit' => $this->room->hotel->nit,
-                'name' => $this->room->hotel->name,
-                'url' => route('hotels.show', ['id' => $this->room->hotel->id])
+                'nit' => $this->hotel->nit,
+                'name' => $this->hotel->name,
+                'url' => route('hotels.show', ['id' => $this->hotel->id])
             ],
             'room_type' => [
-                'name' => $this->room->roomType->name,
-                'url' => route('room_types.show', ['id' => $this->room->roomType->id])
+                'name' => $this->roomType->name,
+                'url' => route('room_types.show', ['id' => $this->roomType->id])
             ],
             'accommodation_type' => [
-                'name' => $this->room->accommodationType->name,
-                'url' => route('accommodation_types.show', ['id' => $this->room->accommodationType->id])
+                'name' => $this->accommodationType->name,
+                'url' => route('accommodation_types.show', ['id' => $this->accommodationType->id])
             ]
         ];
     }
