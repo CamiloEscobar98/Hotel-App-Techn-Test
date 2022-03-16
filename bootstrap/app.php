@@ -61,6 +61,10 @@ $app->singleton(
 
 $app->configure('app');
 
+
+$app->configure('tinker');
+$app->register(\Laravel\Tinker\TinkerServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

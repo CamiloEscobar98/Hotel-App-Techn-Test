@@ -139,6 +139,6 @@ class Hotel extends Model
      */
     public function numberOfRoomsWhenNotAssignmentType($assignmentTypeId)
     {
-        return $this->rooms->whereNot('assignment_room_id', $assignmentTypeId)->sum('ammount_rooms');
+        return $this->rooms->where('id', '!=', $assignmentTypeId)->sum('ammount_rooms');
     }
 }

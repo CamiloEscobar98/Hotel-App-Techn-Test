@@ -84,7 +84,7 @@ class RoomController extends Controller
                 return !$query->where('assignment_room_id', $request->assignment_room_id);
             })->ignore($id), 'max:80', 'string'],
             'assignment_room_id' => ['exists:assignment_accommodation_room_type,id'],
-            'ammount_rooms' => [Rule::max($hotel->numberOfRooms() - $request->ammount_rooms)],
+            'ammount_rooms' => [Rule::max($hotel->properties->rooms_number_total -  $hotel->numberOfRoomsWhenNotAssignmentType($id))],
         ];
 
         $this->validate($request, $rules, [], $this->attributes);
