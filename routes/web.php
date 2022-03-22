@@ -32,7 +32,7 @@ $router->group(['namespace' => 'Auth'], function () use ($router) {
 });
 
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
+$router->group([], function () use ($router) {
 
     /* 
     |-------------------------------------------------------------------------------
@@ -58,12 +58,15 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
             |------------------------------------------------------------------------------
             */
             $router->group(['prefix' => 'countries'], function () use ($router) {
+                $router->get('all', ['as' => 'countries.index', 'uses' => 'CountryController@getAll']);
                 $router->get('/', ['as' => 'countries.index', 'uses' => 'CountryController@index']);
                 $router->post('/', ['as' => 'countries.store', 'uses' => 'CountryController@store']);
                 $router->group(['prefix' => '/{id}'], function () use ($router) {
                     $router->get('/', ['as' => 'countries.show', 'uses' => 'CountryController@show']);
                     $router->put('/', ['as' => 'countries.update', 'uses' => 'CountryController@update']);
                     $router->delete('/', ['as' => 'countries.delete', 'uses' => 'CountryController@destroy']);
+                    
+                    $router->get('/states', ['as' => 'country.states', 'uses' => 'CountryController@getStates']);
                 });
             });
 
@@ -80,6 +83,8 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
                     $router->get('/', ['as' => 'states.show', 'uses' => 'StateController@show']);
                     $router->put('/', ['as' => 'states.update', 'uses' => 'StateController@update']);
                     $router->delete('/', ['as' => 'states.delete', 'uses' => 'StateController@destroy']);
+
+                    $router->get('/cities', ['as' => 'states.cities', 'uses' => 'StateController@getCities']);
                 });
             });
 

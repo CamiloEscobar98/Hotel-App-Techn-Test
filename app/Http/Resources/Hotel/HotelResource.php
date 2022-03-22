@@ -15,6 +15,7 @@ class HotelResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'nit' => $this->nit,
             'name' => $this->name,
             'address' => $this->address,

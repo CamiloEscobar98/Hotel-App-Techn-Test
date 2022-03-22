@@ -16,9 +16,11 @@ class StateResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
             'country' => [
+                'id' => $this->country->id,
                 'name' => $this->country->name,
                 'url' => route('countries.show', ['id' => $this->country->id])
             ],

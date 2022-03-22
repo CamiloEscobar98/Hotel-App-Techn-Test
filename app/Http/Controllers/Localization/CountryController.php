@@ -10,6 +10,7 @@ use App\Http\Resources\Localization\Country\CountryCollection;
 use App\Http\Resources\Localization\Country\CountryShowResource;
 
 use App\Models\Localization\Country;
+use App\Models\Localization\State;
 
 class CountryController extends Controller
 {
@@ -108,8 +109,29 @@ class CountryController extends Controller
             $countryName = $country->name;
             $country->delete();
         } catch (QueryException $ex) {
-            return response()->json(['message' => 'Error! The Country has not been deleted.', 'error_code' => $ex->getCode()], 501);
+            return response()->json(['message' => 'Error! The Country has not been deleted.', 'error_code' => $ex->getCode()], 500);
         }
         return response()->json(['message' => 'Success! The Country: ' . $countryName . ' has been deleted.'], 200);
+    }
+
+    /**
+     * Get all Countries.
+     * 
+     * @return response
+     */
+    public function getAll()
+    {
+        return response()->json(['data' => Country::all()]);
+    }
+
+    /**
+     * Get states from a specified Country.
+     * 
+     * @param int $country
+     * @return response
+     */
+    public function getStates($id)
+    {
+        return response()->json(['data' => State::where('country_id', $id)->get()]);
     }
 }

@@ -87,6 +87,7 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $hotelAux = Hotel::findOrFail($id);
         $rules = [
             'nit' => ['unique:hotels,id,' . $id, 'max:40', 'min:10', 'string'],
             'name' => [Rule::unique('hotels', 'name')->where(function ($query) use ($request) {
@@ -94,23 +95,20 @@ class HotelController extends Controller
             })->ignore($id), 'max:80', 'string'],
             'address' => ['max:150', 'string'],
             'city_id' => ['exists:cities,id'],
+            'properties.rooms_number_total' => ['integer', 'min:' .  $hotelAux->numberOfRooms()]
         ];
 
         $this->validate($request, $rules, [], $this->attributes);
 
         $data = $request->only(['nit', 'name', 'address', 'city_id', 'properties']);
 
-        if (empty($data['properties']['rooms_number_total'])) {
-            $data['properties']['rooms_number_total'] = rand(1, 100);
-        }
-
         try {
             $hotel = Hotel::findOrFail($id);
             $hotel->update($data);
         } catch (QueryException $ex) {
-            return response()->json(['message' => 'Error! The Hotel has not been created.', 'error_code' => $ex->getCode()]);
+            return response()->json(['message' => 'Error! The Hotel has not been updated.', 'error_code' => $ex->getCode()]);
         }
-        return response()->json(['message' => 'The Hotel: ' . $hotel->name . ' has been created.']);
+        return response()->json(['message' => 'The Hotel: ' . $hotel->name . ' has been updated.']);
     }
 
     /**

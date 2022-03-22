@@ -17,6 +17,7 @@ class HotelShowResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'nit' => $this->nit,
             'name' => $this->name,
             'address' => $this->address,
@@ -28,6 +29,7 @@ class HotelShowResource extends JsonResource
                 'url' => route('cities.show', ['id' => $this->city_id])
             ],
             'number_of_rooms' => (int) $this->rooms()->sum('ammount_rooms'),
+            'max_number_of_rooms' => $this->numberOfRooms(),
             'rooms' => RoomsByHotelResource::collection($this->rooms)
 
         ];

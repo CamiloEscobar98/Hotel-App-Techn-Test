@@ -30,7 +30,7 @@ class AssignmentRoomTypeController extends Controller
      */
     public function index()
     {
-        return new AssignmentRoomTypeCollection(AssignmentRoomType::paginate(5));
+        return new AssignmentRoomTypeCollection(AssignmentRoomType::orderby('room_type_id', 'ASC')->paginate(10));
     }
 
     /**

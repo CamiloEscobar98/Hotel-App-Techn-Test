@@ -85,7 +85,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Success!', 'user' => [
             'name' => $user->name,
             'email' => $user->email,
-        ], 'token' => base64_encode($apiToken)], 401);
+        ], 'token' => base64_encode($apiToken)], 200);
     }
 
 

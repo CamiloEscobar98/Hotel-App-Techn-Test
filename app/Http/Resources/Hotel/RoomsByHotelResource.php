@@ -15,6 +15,8 @@ class RoomsByHotelResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'assignment_room_id' => $this->assignmentRoomType->id,
+            'id' => $this->id,
             'roomType' => [
                 'name' => $this->roomType->name,
                 'url' => route('room_types.show', ['id' => $this->roomType->id]),

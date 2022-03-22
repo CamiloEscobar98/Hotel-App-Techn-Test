@@ -15,17 +15,20 @@ class AssignmentRoomTypeResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'room_type' => [
+                'id' => $this->roomType->id,
                 'name' => $this->roomType->name,
                 'url' => route('room_types.show', ['id' => $this->room_type_id])
             ],
             'accommodation_type' => [
+                'id' => $this->accommodationType->id,
                 'name' => $this->accommodationType->name,
                 'url' => route('accommodation_types.show', ['id' => $this->accommodation_type_id])
             ],
             'dates' => [
                 'created_at' => $this->created_at,
-                'updated-at' => $this->updated_at
+                'updated_at' => $this->updated_at
             ]
         ];
     }

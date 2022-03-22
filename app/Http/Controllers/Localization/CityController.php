@@ -34,7 +34,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        return new CityCollection(City::orderBy('state_id', 'ASC')->paginate(5));
+        return new CityCollection(City::orderBy('state_id', 'ASC')->paginate(25));
     }
 
     /**

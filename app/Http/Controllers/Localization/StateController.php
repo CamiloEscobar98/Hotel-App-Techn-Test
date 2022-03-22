@@ -9,7 +9,9 @@ use Illuminate\Database\QueryException;
 
 use App\Http\Resources\Localization\State\StateCollection;
 use App\Http\Resources\Localization\State\StateShowResource;
+
 use App\Models\Localization\State;
+use App\Models\Localization\City;
 
 class StateController extends Controller
 {
@@ -31,7 +33,7 @@ class StateController extends Controller
      */
     public function index()
     {
-        return new StateCollection(State::paginate(5));
+        return new StateCollection(State::paginate(15));
     }
 
     /**
@@ -122,5 +124,16 @@ class StateController extends Controller
             return response()->json(['message' => 'Error! The State has not been deleted.', 'error_code' => $ex->getCode()], 500);
         }
         return response()->json(['message' => 'Success! The State: ' . $stateName . ' has been deleted.'], 200);
+    }
+
+    /**
+     * Get cities from a specified State.
+     * 
+     * @param int $country
+     * @return response
+     */
+    public function getCities($id)
+    {
+        return response()->json(['data' => City::where('state_id', $id)->get()]);
     }
 }
