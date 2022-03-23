@@ -31,23 +31,24 @@ $router->group(['namespace' => 'Auth'], function () use ($router) {
     });
 });
 
-
-$router->group(['middleware' => 'auth'], function () use ($router) {
-
-    /* 
+/* 
     |-------------------------------------------------------------------------------
     | Routes for Users
     |------------------------------------------------------------------------------
     */
-    $router->group(['prefix' => 'users'], function () use ($router) {
-        $router->get('/', ['as' => 'users.index', 'uses' => 'UserController@index']);
-        $router->post('/', ['as' => 'users.store', 'uses' => 'UserController@store']);
-        $router->group(['prefix' => '/{id}'], function () use ($router) {
-            $router->get('/', ['as' => 'users.show', 'uses' => 'UserController@show']);
-            $router->put('/', ['as' => 'users.update', 'uses' => 'UserController@update']);
-            $router->delete('/', ['as' => 'users.delete', 'uses' => 'UserController@destroy']);
-        });
+$router->group(['prefix' => 'users'], function () use ($router) {
+    $router->get('/', ['as' => 'users.index', 'uses' => 'UserController@index']);
+    $router->post('/', ['as' => 'users.store', 'uses' => 'UserController@store']);
+    $router->group(['prefix' => '/{id}'], function () use ($router) {
+        $router->get('/', ['as' => 'users.show', 'uses' => 'UserController@show']);
+        $router->put('/', ['as' => 'users.update', 'uses' => 'UserController@update']);
+        $router->delete('/', ['as' => 'users.delete', 'uses' => 'UserController@destroy']);
     });
+});
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+
+
 
     $router->group(['prefix' => 'configuration'], function () use ($router) {
         $router->group(['prefix' => 'localization', 'namespace' => 'Localization'], function () use ($router) {
