@@ -16,5 +16,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()->count(20)->create();
+        User::factory()->create(['email' => 'camilo_escobar2398@outlook.com']);
     }
 }
