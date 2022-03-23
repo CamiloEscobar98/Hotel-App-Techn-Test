@@ -32,7 +32,7 @@ $router->group(['namespace' => 'Auth'], function () use ($router) {
 });
 
 
-$router->group([], function () use ($router) {
+$router->group(['middleware' => 'auth'], function () use ($router) {
 
     /* 
     |-------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ $router->group([], function () use ($router) {
                     $router->get('/', ['as' => 'countries.show', 'uses' => 'CountryController@show']);
                     $router->put('/', ['as' => 'countries.update', 'uses' => 'CountryController@update']);
                     $router->delete('/', ['as' => 'countries.delete', 'uses' => 'CountryController@destroy']);
-                    
+
                     $router->get('/states', ['as' => 'country.states', 'uses' => 'CountryController@getStates']);
                 });
             });
